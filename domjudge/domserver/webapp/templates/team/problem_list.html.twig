@@ -1,0 +1,26 @@
+{% extends "team/base.html.twig" %}
+
+{% block title %}Contest problems - {{ parent() }}{% endblock %}
+
+{% block content %}
+ {% set problem_text_path = 'team_problem_text'%}
+
+{% if problem_text_path is null %}
+
+    Problem text has unknown type
+
+{% else %}
+
+    <iframe frameborder="0" id="mainframe" src="{{ path(problem_text_path, {'probId': problem.probid}) }}"  width="50%" height="200%" scroll="no" style="margin-left:3%"></iframe>
+
+{% endif %}   
+    {{problem.probid}}
+
+<script type="text/javascript" language="javascript"> 
+    $('#mainframe').css('height', $(window).height()+'px');
+</script>
+
+
+
+{% endblock %}
+

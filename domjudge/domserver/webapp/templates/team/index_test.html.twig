@@ -1,0 +1,94 @@
+{% extends "team/base.html.twig" %}
+
+{% block title %}Contest problems - {{ parent() }}
+
+{% endblock %}
+
+{% block content %}
+      
+                                
+<h1 class="mt-4 text-left">Problem list - {{ contest.name }}  </h1>
+<iframe src="https://hackmd.io/fm_XJBkDRNmhDyAZtbIKvw?view" width="50%" height="450" frameborder="0" style="border:0;" allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+
+
+<div class="table-wrapper">
+
+    <table class="data-table table table-sm table-striped table-borderexited" style="width:auto">
+    
+    <thead class="">
+    
+    <td colspan='7'>
+        <form class=form-inline action="">
+            <input class="form-control search-query" type='text' name='id'  placeholder="Problem ID">
+            <button class="form-control" type='submit' >Go</button></form>
+            <form class="form-search form-inline">
+            <input type="text" name=search class="form-control search-query" placeholder="Keywords Title or Source">
+            <button type="submit" class="form-control">Search</button>
+        </form>
+    </td>
+        
+        <tr>
+            <th scope="col">#</th>
+            <th> Problem Name </th>
+            <th> Time Limit </th> 
+            <th> Memory Limit </th>
+            <th> Restriction Languages </th>
+            <th id='trigger_group'> Problems Group </th>
+            <th> Acceptance </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% set num_group = 0 %}
+        
+            {% for row in problems|batch(1, []) %}
+            {% for problemData in row %}
+                              
+                                    {% if problemData is empty %}
+                                        <div class="card" style="border: none;"></div>
+                                    {% else %}
+                                        {% set problem = problemData.0 %}
+          
+        
+        <tr>
+            <td width = "5%">
+                 <a href="/public/problems/{{problem.problem.probid}}/text" target="_blank" style="text-decoration:none; color:black">
+
+                 {{ problem.problem.probid }}</a></td>
+                
+            <td width="30%">
+                <a href="/team/problem_list/{{problem.problem.probid}}" target="_blank" style="text-decoration:none;">
+                
+                 {{problem.problem.name }}</a></td>
+
+            <td>{{ problem.problem.timelimit }}</td>
+
+            <td>{{ problem.problem.memlimit }}</td>
+            
+            <td>{{ problem.problem.restrictionlanguages|join(', ') }}</td>
+
+            
+            {% if problem.problem.problemsgroup != null %} 
+        
+            <td class="hidden_td" style="display: none">{{ problem.problem.problemsgroup|join(', ')|raw }}</td>
+             {% endif %}
+       
+            <td></td>
+            
+        </tr>
+           
+            {% endif %}
+            {% endfor %}
+            {% endfor %}
+
+        
+    </tbody>
+
+<script>
+    $("#trigger_group").click(function(){
+            $(".hidden_td").slideToggle();
+  });
+</script>
+
+    
+{% endblock %}

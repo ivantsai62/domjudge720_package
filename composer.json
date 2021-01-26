@@ -1,0 +1,6 @@
+{
+    "require": {
+        "knpuniversity/oauth2-client-bundle": "^1.28"
+        
+    }
+}

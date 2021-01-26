@@ -1,0 +1,16 @@
+# Generated from 'static.yaml.in' on Wed Feb 19 07:43:20 UTC 2020.
+
+parameters:
+    domjudge.version: 7.2.0
+    domjudge.bindir: /opt/domjudge/domserver/bin
+    domjudge.etcdir: /opt/domjudge/domserver/etc
+    domjudge.webappdir: /opt/domjudge/domserver/webapp
+    domjudge.libdir: /opt/domjudge/domserver/lib
+    domjudge.sqldir: /opt/domjudge/domserver/sql
+    domjudge.libvendordir: /opt/domjudge/domserver/lib/vendor
+    domjudge.logdir: /opt/domjudge/domserver/log
+    domjudge.rundir: /opt/domjudge/domserver/run
+    domjudge.tmpdir: /opt/domjudge/domserver/tmp
+    domjudge.submitdir: /opt/domjudge/domserver/submissions
+    domjudge.baseurl: http://localhost/
+    domjudge.submitclient_enabled: yes

@@ -1,0 +1,219 @@
+{# 導入select 的 css #}
+{% import "jury/jury_macros.twig" as macros %}
+{% block extrahead %}
+    {{ macros.table_extrahead() }}
+    {{ macros.select2_extrahead() }}
+{% endblock %}
+
+
+<div class="row">
+    <div class="col-lg-4">
+        {{ form_start(form) }}
+        {% if form.offsetExists('externalid') %}
+            {{ form_row(form.externalid) }}
+        {% endif %}
+        {{ form_row(form.name) }}
+        <div class="form-group">
+            {{ form_label(form.subtask) }}
+            <div class="input-group">
+                {{ form_widget(form.subtask) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">task</div>
+                </div>
+            </div>
+        </div>
+        <div id ='as'>
+        {{dump(form.subtask)}}
+        <input  type="hidden" id = "subtask_old" value = '{{form.vars.value.subtask}}'></input>
+        {% if form.vars.value.subtask != 0 and form.vars.value.subtask != null %}
+        
+            {% for i in 1..(form.vars.value.subtask) %}
+            <div class="form-group" id = "group_{{i}}">
+                <div class="input-group">
+                        <label class="required">
+                            Task{{i}}
+                        </label>
+                        <div class = "input-group">
+                            {% if test is defined %}
+                            {% if test != null %}
+                            <input type="number" class="form-control" min="1" id="task_{{i}}" value="{{test[i-1]}}" >
+                            {% endif %}
+                            {% else %}
+                            <input type="number" class="form-control" min="1" id="task_{{i}}" >
+                            {% endif %}
+                        </div>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+        </div>
+
+        <div class="form-group">
+            <div class="input-group">
+                {{ form_widget(form.taskpoint) }}
+            </div>
+        </div>
+        <div class="form-group" id ='form-timelimit'>
+            {{ form_label(form.timelimit) }}
+            <div class="input-group">
+                {{ form_widget(form.timelimit) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">sec</div>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            {{ form_label(form.memlimit) }}
+            <div class="input-group">
+                {{ form_widget(form.memlimit) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">kB</div>
+                </div>
+            </div>
+            {{ form_help(form.memlimit) }}
+        </div>
+        
+        <div class="form-group">
+            {{ form_label(form.outputlimit) }}
+            <div class="input-group">
+                {{ form_widget(form.outputlimit) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">kB</div>
+                </div>
+            </div>
+            {{ form_help(form.outputlimit) }}
+        </div>
+        {#{ dump(form.timelimit) }#}
+        {{ form_end(form) }}
+    </div>
+</div>
+<script>
+    $( document ).ready(function() {
+        var sub_new = $('#problem_subtask');
+        var sub_old = $('#subtask_old');
+        var new_subtask1 = sub_new.val();
+        var old_subtask1 = sub_old.val();
+        console.log(sub_new.val());
+        console.log(sub_old.val());
+        
+        if (old_subtask1 != 0 )
+        {
+            console.log("OKOK");
+        if( new_subtask1 > old_subtask1)
+                         {
+                            console.log("OKOK2");
+                            old_subtask1++;
+                            for ( i = old_subtask1; i <= new_subtask1 ; ++i )
+                            {
+                                item = '<div class="form-group" id = group_'+ i +'><label class=required>Task'+ i +'</label><div class =input-group><input type="number" min="0" class="form-control" id="task_'+ i +'" value=""></div></div>';
+                                $('#as').append(item);
+                            }
+                         }
+        else
+                        {
+                            console.log("OKOK3");
+                            for ( i = old_subtask1 ; i>new_subtask1 ; --i)
+                            {
+                                $('#group_'+ i ).remove();
+                                console.log("OKO11K");
+                            }
+                         }
+        }
+    });
+    $(function () {
+            var $contests =$('#problem_subtask');
+            var $problem = $('#problem_subtask');
+            var $inputVal = $problem.val();
+            $contests.on('change', function () {
+                var $form = $(this).closest('form');
+                var data = {};
+                //新增測試資料  
+                if ($inputVal<0 || $inputVal == "")
+                         {
+                            $inputVal = 0;
+                         }
+                         if ($inputVal>20)
+                         {
+                            $inputVal = 20;
+                         }
+                //console.log(inputVal);
+                data['old_subtask'] = $inputVal;
+                data[$problem.attr('name')] = $problem.val();
+                
+              //  console.log($problem.attr('name'));
+               // console.log($problem.val());
+                $.ajax({
+                    url: $form.attr('action'),
+                    type: $form.attr('method'),
+                    data: data,
+                    success: function (html) {
+                        var new_subtask = data[$problem.attr('name')];
+                        //var item = '<div class="form-group" id = task_'+subtask+'><label class=required>Task'+data[$problem.attr('name')]+'</label><div class =input-group><input type="text" class="form-control" id="text" value=""></div></div>';
+                        console.log(data['old_subtask']);
+                        console.log(new_subtask);
+                        var old_subtask = parseInt(data['old_subtask']);
+                     //   console.log({{form.subtask|json_encode}});
+                        var $newProblems = $(html).find('#problem_taskpoint');
+                         //$('#as').empty();
+                         //$('#as').prepend(item);
+                         var i;
+                         if (new_subtask<0)
+                         {
+                            new_subtask = 0;
+                            $('#problem_subtask').val(0);
+                         }
+                         if (new_subtask>20)
+                         {
+                            new_subtask = 20;
+                            $('#problem_subtask').val(20);
+                         }
+                         if( new_subtask >= old_subtask)
+                         {
+                            old_subtask++;
+                            for ( i = old_subtask; i <= new_subtask ; ++i )
+                            {
+                                item = '<div class="form-group" id = group_'+ i +'><label class=required>Task'+ i +'</label><div class =input-group><input type="number" min="0" class="form-control" id="task_'+ i +'" value=""></div></div>';
+                                $('#as').append(item);
+                            }
+                         }
+                         else
+                         {
+                            
+                            for ( i = old_subtask ; i>new_subtask ; --i)
+                            {
+                                $('#group_'+ i ).remove();
+                            }
+                         }
+                         //$newProblems.attr("value",data[$problem.attr('name')]);
+                         
+                         //$newProblems.closest('.form-group').find('.invalid-feedback').remove();
+                         $('#as').closest('.form-group').replaceWith(
+                             $newProblems.closest('.form-group')
+                         );
+                         
+                         
+                    }
+                    
+                });
+                
+                $inputVal = $(this).val();
+            });
+
+             $("form").submit(function(e){
+                var $problem2 = $('#problem_subtask');
+                var $taskpoint = $('#problem_taskpoint');
+                var $subtask = $problem2.val();
+                var $i ;
+                var $all_taskpoint = [];
+                for ( $i = 1 ; $i <= $subtask ; $i++)
+                {
+                    var $point = $('#task_'+($i)).val();
+                    $all_taskpoint[$i-1] = $point;
+                }
+                $taskpoint.val($all_taskpoint);
+
+             });
+        });
+        var objSource = window.event.srcElement;  
+
+</script>

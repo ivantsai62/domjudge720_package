@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DOMjudge Manual &mdash; DOMjudge 7.2.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Overview" href="overview.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="#" class="icon icon-home"> DOMjudge
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                7.2
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install-domserver.html">Installation of the DOMserver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install-judgehost.html">Installation of the judgehosts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install-workstation.html">Installation of the team workstations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-basic.html">Configuring the system</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-advanced.html">Advanced configuration topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running.html">Running the contest</a></li>
+<li class="toctree-l1"><a class="reference internal" href="judging.html">Judging topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="develop.html">Development</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quick-install.html">Appendix: Quick installation checklist</a></li>
+<li class="toctree-l1"><a class="reference internal" href="problem-format.html">Appendix: Problem format specification</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">DOMjudge</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>DOMjudge Manual</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/DOMjudge/domjudge/blob/master/doc/manual/index.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="domjudge-manual">
+<h1>DOMjudge Manual<a class="headerlink" href="#domjudge-manual" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#features">Features</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#requirements-and-contest-planning">Requirements and contest planning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#copyright-and-licencing">Copyright and licencing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#about-the-name-and-logo">About the name and logo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="overview.html#contact">Contact</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install-domserver.html">Installation of the DOMserver</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install-domserver.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-domserver.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-domserver.html#database-configuration">Database configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-domserver.html#web-server-configuration">Web server configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-domserver.html#log-in-to-domjudge">Log in to DOMjudge</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install-judgehost.html">Installation of the judgehosts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install-judgehost.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-judgehost.html#building-and-installing">Building and installing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-judgehost.html#sudo-permissions">Sudo permissions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-judgehost.html#creating-a-chroot-environment">Creating a chroot environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-judgehost.html#linux-control-groups">Linux Control Groups</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-judgehost.html#rest-api-credentials">REST API credentials</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-judgehost.html#starting-the-judgedaemon">Starting the judgedaemon</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install-workstation.html">Installation of the team workstations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="install-workstation.html#command-line-submit-client">Command line submit client</a></li>
+<li class="toctree-l2"><a class="reference internal" href="install-workstation.html#rebuilding-team-documentation">Rebuilding team documentation</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config-basic.html">Configuring the system</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config-basic.html#setting-up-users-and-teams">Setting up users and teams</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-basic.html#adding-a-contest">Adding a contest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-basic.html#setting-up-problems">Setting up problems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-basic.html#checking-your-configuration">Checking your configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-basic.html#testing-jury-solutions">Testing jury solutions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config-advanced.html">Advanced configuration topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#adding-graphics">Adding graphics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#authentication-and-registration">Authentication and registration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#executables">Executables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#programming-languages">Programming languages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#special-run-and-compare-programs">Special run and compare programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#compare-programs">Compare programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#run-programs">Run programs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#printing">Printing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#multiple-judgedaemons-per-machine">Multiple judgedaemons per machine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config-advanced.html#multi-site-contests">Multi-site contests</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="running.html">Running the contest</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="running.html#team-status">Team status</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html#clarification-requests">Clarification Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running.html#balloon-handling">Balloon handling</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="judging.html">Judging topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="judging.html#flow-of-a-submission">Flow of a submission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="judging.html#rejudging">Rejudging</a></li>
+<li class="toctree-l2"><a class="reference internal" href="judging.html#ignoring-a-submission">Ignoring a submission</a></li>
+<li class="toctree-l2"><a class="reference internal" href="judging.html#enforcement-of-time-limits">Enforcement of time limits</a></li>
+<li class="toctree-l2"><a class="reference internal" href="judging.html#judging-consistency">Judging consistency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="judging.html#lazy-judging-and-results-priority">Lazy judging and results priority</a></li>
+<li class="toctree-l2"><a class="reference internal" href="judging.html#judgehost-restrictions">Judgehost restrictions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="judging.html#solutions-to-common-issues">Solutions to common issues</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="develop.html">Development</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="develop.html#api">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="develop.html#bootstrapping-from-git-repository-sources">Bootstrapping from Git repository sources</a></li>
+<li class="toctree-l2"><a class="reference internal" href="develop.html#maintainer-mode-installation">Maintainer mode installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="develop.html#makefile-structure">Makefile structure</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="appendices">
+<h2>Appendices<a class="headerlink" href="#appendices" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quick-install.html">Appendix: Quick installation checklist</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick-install.html#domserver">DOMserver</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-install.html#judgehosts">Judgehosts</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick-install.html#checking-if-it-works">Checking if it works</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="problem-format.html">Appendix: Problem format specification</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="overview.html" class="btn btn-neutral float-right" title="Overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2004-2020 by the DOMjudge developers and contributors
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
