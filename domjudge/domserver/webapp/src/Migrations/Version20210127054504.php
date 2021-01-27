@@ -22,7 +22,6 @@ final class Version20210127054504 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('DROP TABLE scoreache');
         $this->addSql('ALTER TABLE problem CHANGE restriction_languages restriction_languages LONGTEXT DEFAULT \'NULL\' COMMENT \'JSON-encoded restrictions(DC2Type:json)\', CHANGE subtask subtask INT DEFAULT NULL, CHANGE task_point task_point LONGTEXT DEFAULT \'NULL\' COMMENT \'JSON-encoded restrictions(DC2Type:json)\', CHANGE problems_group problems_group LONGTEXT DEFAULT \'NULL\' COMMENT \'JSON-encoded restrictions(DC2Type:json)\'');
         $this->addSql('ALTER TABLE judging_run CHANGE task task INT DEFAULT NULL');
         $this->addSql('ALTER TABLE judging CHANGE task_result task_result LONGTEXT DEFAULT NULL COMMENT \'(DC2Type:json)\'');
