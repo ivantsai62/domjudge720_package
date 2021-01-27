@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20210127054504 extends AbstractMigration
+final class Version20210127063119 extends AbstractMigration
 {
     public function getDescription() : string
     {
@@ -34,7 +34,6 @@ final class Version20210127054504 extends AbstractMigration
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE scoreache (id INT AUTO_INCREMENT NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB COMMENT = \'\' ');
         $this->addSql('ALTER TABLE judging CHANGE task_result task_result LONGTEXT DEFAULT \'NULL\' COLLATE utf8mb4_unicode_ci COMMENT \'(DC2Type:json)\'');
         $this->addSql('ALTER TABLE judging_run CHANGE task task INT DEFAULT NULL');
         $this->addSql('ALTER TABLE problem CHANGE restriction_languages restriction_languages LONGTEXT DEFAULT \'\'NULL\'\' COLLATE utf8mb4_unicode_ci COMMENT \'JSON-encoded restrictions(DC2Type:json)\', CHANGE subtask subtask INT DEFAULT NULL, CHANGE task_point task_point LONGTEXT DEFAULT \'\'NULL\'\' COLLATE utf8mb4_unicode_ci COMMENT \'JSON-encoded restrictions(DC2Type:json)\', CHANGE problems_group problems_group LONGTEXT DEFAULT \'\'NULL\'\' COLLATE utf8mb4_unicode_ci COMMENT \'JSON-encoded restrictions(DC2Type:json)\'');
