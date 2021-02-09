@@ -60,8 +60,9 @@ class JuryMiscController extends BaseController
      */
     public function indexAction(Request $request)
     {
+        //新增 查看request內容
         $errors = [];
-        return $this->render('jury/index.html.twig', ['errors' => $errors]);
+        return $this->render('jury/index.html.twig', ['errors' => $errors, 'request' => $request]);
     }
 
     /**

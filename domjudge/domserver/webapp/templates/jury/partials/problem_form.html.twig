@@ -1,10 +1,11 @@
-{# 導入select 的 css #}
+{# 導入form select 的 css #}
+{#-----CCU-----#}
 {% import "jury/jury_macros.twig" as macros %}
 {% block extrahead %}
     {{ macros.table_extrahead() }}
     {{ macros.select2_extrahead() }}
 {% endblock %}
-
+{#-----CCU-----#}
 
 <div class="row">
     <div class="col-lg-4">
@@ -13,6 +14,7 @@
             {{ form_row(form.externalid) }}
         {% endif %}
         {{ form_row(form.name) }}
+        {#-----CCU-----#}
         <div class="form-group">
             {{ form_label(form.subtask) }}
             <div class="input-group">
@@ -22,8 +24,7 @@
                 </div>
             </div>
         </div>
-        <div id ='as'>
-        {{dump(form.subtask)}}
+        <div id ='task_point'>
         <input  type="hidden" id = "subtask_old" value = '{{form.vars.value.subtask}}'></input>
         {% if form.vars.value.subtask != 0 and form.vars.value.subtask != null %}
         
@@ -33,13 +34,20 @@
                         <label class="required">
                             Task{{i}}
                         </label>
+                        {#if has task_point in database output the task_point #}
                         <div class = "input-group">
-                            {% if test is defined %}
-                            {% if test != null %}
-                            <input type="number" class="form-control" min="1" id="task_{{i}}" value="{{test[i-1]}}" >
+                            {% if task_point is defined %}
+                            {% if task_point != null %}
+                            <input type="number" class="form-control" min="1" id="task_{{i}}" value="{{task_point[i-1]}}" >
+                            <div class="input-group-append">
+                                <div class="input-group-text">wt</div>
+                            </div>
                             {% endif %}
                             {% else %}
                             <input type="number" class="form-control" min="1" id="task_{{i}}" >
+                            <div class="input-group-append">
+                                <div class="input-group-text">wt</div>
+                            </div>
                             {% endif %}
                         </div>
                 </div>
@@ -53,6 +61,7 @@
                 {{ form_widget(form.taskpoint) }}
             </div>
         </div>
+        {#-----CCU-----#}
         <div class="form-group" id ='form-timelimit'>
             {{ form_label(form.timelimit) }}
             <div class="input-group">
@@ -87,8 +96,11 @@
         {{ form_end(form) }}
     </div>
 </div>
+{# control task point table by ajax #}
+{#-----CCU-----#}
 <script>
     $( document ).ready(function() {
+        //取得新舊subtask
         var sub_new = $('#problem_subtask');
         var sub_old = $('#subtask_old');
         var new_subtask1 = sub_new.val();
@@ -98,24 +110,20 @@
         
         if (old_subtask1 != 0 )
         {
-            console.log("OKOK");
         if( new_subtask1 > old_subtask1)
                          {
-                            console.log("OKOK2");
                             old_subtask1++;
                             for ( i = old_subtask1; i <= new_subtask1 ; ++i )
                             {
                                 item = '<div class="form-group" id = group_'+ i +'><label class=required>Task'+ i +'</label><div class =input-group><input type="number" min="0" class="form-control" id="task_'+ i +'" value=""></div></div>';
-                                $('#as').append(item);
+                                $('#task_point').append(item);
                             }
                          }
         else
                         {
-                            console.log("OKOK3");
                             for ( i = old_subtask1 ; i>new_subtask1 ; --i)
                             {
                                 $('#group_'+ i ).remove();
-                                console.log("OKO11K");
                             }
                          }
         }
@@ -136,27 +144,20 @@
                          {
                             $inputVal = 20;
                          }
-                //console.log(inputVal);
                 data['old_subtask'] = $inputVal;
                 data[$problem.attr('name')] = $problem.val();
                 
-              //  console.log($problem.attr('name'));
-               // console.log($problem.val());
                 $.ajax({
                     url: $form.attr('action'),
                     type: $form.attr('method'),
                     data: data,
                     success: function (html) {
                         var new_subtask = data[$problem.attr('name')];
-                        //var item = '<div class="form-group" id = task_'+subtask+'><label class=required>Task'+data[$problem.attr('name')]+'</label><div class =input-group><input type="text" class="form-control" id="text" value=""></div></div>';
-                        console.log(data['old_subtask']);
+                         console.log(data['old_subtask']);
                         console.log(new_subtask);
                         var old_subtask = parseInt(data['old_subtask']);
-                     //   console.log({{form.subtask|json_encode}});
                         var $newProblems = $(html).find('#problem_taskpoint');
-                         //$('#as').empty();
-                         //$('#as').prepend(item);
-                         var i;
+                          var i;
                          if (new_subtask<0)
                          {
                             new_subtask = 0;
@@ -172,8 +173,8 @@
                             old_subtask++;
                             for ( i = old_subtask; i <= new_subtask ; ++i )
                             {
-                                item = '<div class="form-group" id = group_'+ i +'><label class=required>Task'+ i +'</label><div class =input-group><input type="number" min="0" class="form-control" id="task_'+ i +'" value=""></div></div>';
-                                $('#as').append(item);
+                                item = '<div class="form-group" id = group_'+ i +'><label class=required>Task'+ i +'</label><div class =input-group><input type="number" min="0" class="form-control" id="task_'+ i +'" value=""><div class="input-group-append"><div class="input-group-text">wt</div></div></div></div>';
+                                $('#task_point').append(item);
                             }
                          }
                          else
@@ -184,9 +185,7 @@
                                 $('#group_'+ i ).remove();
                             }
                          }
-                         //$newProblems.attr("value",data[$problem.attr('name')]);
                          
-                         //$newProblems.closest('.form-group').find('.invalid-feedback').remove();
                          $('#as').closest('.form-group').replaceWith(
                              $newProblems.closest('.form-group')
                          );
@@ -217,3 +216,4 @@
         var objSource = window.event.srcElement;  
 
 </script>
+{#-----CCU-----#}

@@ -189,6 +189,7 @@ class Problem extends BaseApiEntity
      */
     private $testcases;
 
+    /*-------CCU-------*/
     //新增限制語言
      /**
      * @var array
@@ -198,13 +199,15 @@ class Problem extends BaseApiEntity
      *
      */
     private $restriction_languages;
+    
+    //add subtask
 
     /**
      * @ORM\Column(type="integer", nullable=true)
      */
     private $subtask;
 
-    //新增限制語言
+    //add task_point
      /**
      * @var array
      * @ORM\Column(type="json", name="task_point",
@@ -213,13 +216,13 @@ class Problem extends BaseApiEntity
      *
      */
     private $task_point;
-
+    //add problems_group
     /**
      * @ORM\Column(type="json", name="problems_group",options={"comment"="JSON-encoded restrictions","default"="NULL"},
      *     nullable=true)
      */
     private $problems_group;
-
+    /*-------CCU-------*/
 
 
 
@@ -766,49 +769,6 @@ class Problem extends BaseApiEntity
         return $this->clarifications;
     }
 
-    //新增限制語言
-     /**
-     * Set restrictions
-     *
-     * @param array $restriction_languages
-     *
-     * @return Problem
-     */
-    public function setRestrictionLanguages($restriction_languages)
-    {
-        $this->restriction_languages = $restriction_languages;
-
-        return $this;
-    }
-
-    /**
-     * Get restrictions
-     *
-     * @return array
-     */
-    public function getRestrictionLanguages()
-    {
-        return $this->restriction_languages;
-    }
-   
-    public function setLanguages(array $languages)
-    {
-        $this->restriction_languages['languages'] = $languages;
-        return $this;
-    }
-
-    /**
-     * Get restriction contests
-     * @return int[]
-     */
-    public function getLanguages()
-    {
-        return $this->restriction_languages['language'] ?? [];
-    }
-
-
-
-
     /**
      * @ORM\PrePersist()
      * @ORM\PreUpdate()
@@ -860,24 +820,80 @@ class Problem extends BaseApiEntity
                 ->setProblemtextType($problemTextType);
         }
     }
+     /*-------CCU-------*/
+     //新增限制語言
+     /**
+     * Set restrictions
+     *
+     * @param array $restriction_languages
+     *
+     * @return Problem
+     */
+    public function setRestrictionLanguages($restriction_languages)
+    {
+        $this->restriction_languages = $restriction_languages;
 
+        return $this;
+    }
+
+    /**
+     * Get restrictions
+     *
+     * @return array
+     */
+    public function getRestrictionLanguages()
+    {
+        return $this->restriction_languages;
+    }
+   
+    public function setLanguages(array $languages)
+    {
+        $this->restriction_languages['languages'] = $languages;
+        return $this;
+    }
+
+    /**
+     * Get restriction contests
+     * @return int[]
+     */
+    public function getLanguages()
+    {
+        return $this->restriction_languages['language'] ?? [];
+    }
+    /**
+     * Get subtask
+     *
+     * @return integer
+     */
     public function getSubtask()
     {
         return $this->subtask;
     }
-
+    /**
+     * Set subtask
+     *
+     * @return integer
+     */
     public function setSubtask($subtask)
     {
         $this->subtask = $subtask;
 
         return $this;
     }
-
+    /**
+     * Get TaskPoint
+     *
+     * @return json
+     */
     public function getTaskPoint(): ?string
     {
         return $this->task_point;
     }
-
+    /**
+     * Set TaskPoint
+     *
+     * 
+     */
     public function setTaskPoint(?string $task_point): self
     {
         $this->task_point = $task_point;
@@ -896,4 +912,5 @@ class Problem extends BaseApiEntity
 
         return $this;
     }
+    /*-------CCU-------*/
 }

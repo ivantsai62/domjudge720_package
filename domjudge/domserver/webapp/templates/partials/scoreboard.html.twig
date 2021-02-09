@@ -1,7 +1,7 @@
 {% if static is not defined %}
     {% set static = false %}
 {% endif %}
-{#{dump(scoreboard)}#}
+
 {% if ajax is defined and ajax and not static and public %}
     <div class="d-none">
         {% include 'partials/scoreboard_progress_bar.html.twig' with {contest: current_contest} %}

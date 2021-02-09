@@ -103,12 +103,21 @@
 
                                     {% if key == "status" %}
                                     {{- (item.value|default(item.default|default('')))|statusIcon()|raw -}}
-
+                                    
+                                    {#ivan#}
                                     {#新增內容 若key=restriction_languages其item.value 為 array 需將其中的值印出 #}
                                     {% elseif key == "restriction_languages" %}
                                     {%- for v in item.value -%}
                                     {{- v -}} <br>
                                     {%- endfor -%}
+                                    {#新增內容 若key=problems_group其item.value 為 array 需將其中的值印出 #}
+                                    {% elseif key == "problems_group" %}
+                                    {%- for k in item.value -%}
+                                    {{- k -}} <br>
+                                    {%- endfor -%}
+
+
+
 
                                     {% else %}
                                     {{- (item.value|default(item.default|default('')))|raw -}}

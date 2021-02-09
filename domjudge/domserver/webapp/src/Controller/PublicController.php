@@ -379,7 +379,7 @@ class PublicController extends BaseController
     //新增頁面
      
     /**
-     * @Route("public_index_test", name="public_index_test")
+     * @Route("/homepage", name="public_homepage")
 
      */
 
@@ -416,7 +416,7 @@ class PublicController extends BaseController
 
        
 
-        return $this->render('public/index_test.html.twig', [
+        return $this->render('public/homepage.html.twig', [
             'problems' => $problems,
             'showLimits' => $showLimits,
             'defaultMemoryLimit' => $defaultMemoryLimit,

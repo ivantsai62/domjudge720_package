@@ -73,14 +73,18 @@ class SubmissionController extends BaseController
         $team    = $user->getTeam();
         $contest = $this->dj->getCurrentContest($user->getTeamid());
         $problem       = $this->em->getRepository(Problem::class)->findAll();
+        /*-----CCU-----*/
+        //use problem data
         $formData    = [];
         $formData['problem'] = $problem;
         $form    = $this->formFactory
             ->createBuilder(SubmitProblemType::class)
             ->setAction($this->generateUrl('team_submit'))->setData($formData)
             ->getForm();
-
+        /*-----CCU-----*/
         $form->handleRequest($request);
+        /*-----CCU-----*/
+        //add !$request->isXmlHttpRequest() to ignore ajax submission 
         if ($form->isSubmitted() && $form->isValid() && !$request->isXmlHttpRequest() ) {
             if ($contest === null) {
                 $this->addFlash('danger', 'No active contest');

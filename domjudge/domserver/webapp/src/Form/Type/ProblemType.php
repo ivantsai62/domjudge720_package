@@ -37,7 +37,6 @@ class ProblemType extends AbstractExternalIdEntityType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $this->addExternalIdField($builder, Problem::class);
-        dump($options['data']);
         $builder->add('name', TextType::class);
         $builder->add('timelimit', NumberType::class);
         $builder->add('memlimit', IntegerType::class, [
@@ -92,6 +91,7 @@ class ProblemType extends AbstractExternalIdEntityType
             'label' => 'Use run script as compare script.',
             'required' => false,
         ]);
+        /*-------CCU-------*/
         //新增限制語言
         $restriction_languages       = $this->em->getRepository(Language::class)->findAll();
         $restriction_languagesChoices = [];
@@ -100,6 +100,7 @@ class ProblemType extends AbstractExternalIdEntityType
             $restriction_languagesChoices[$restriction_language->getName()] = $restriction_language->getName();
             }
         }
+        //add subtask form table
         $builder->add('subtask', IntegerType::class, [
             'required' => false,
             'attr' => array(
@@ -107,9 +108,10 @@ class ProblemType extends AbstractExternalIdEntityType
                 'max' => '20',
             )
         ]);
+        //hide taskpoint table , use to save the data of taskpoint(with javascript)
         $builder->add('taskpoint', HiddenType::class, [
         ]);
-
+        //add restriction language
         $builder->add('restrictionlanguages', ChoiceType::class, [
             'multiple' => true,
             'required' => false,
@@ -203,63 +205,30 @@ class ProblemType extends AbstractExternalIdEntityType
               $allow_add[$allow] = $allow;
           }
 
-         
-
-
-
-        
         //while 正確版
        
-            if(isset($not_allow)){
-                foreach($not_allow as $no){
-                    $not_add[] = $no->getName();
-                }
+        if(isset($not_allow)){
+            foreach($not_allow as $no){
+                $not_add[] = $no->getName();
             }
-            foreach($maybe_edit_group as $maybe){
-                $maybe_add[] = $maybe->getProblemsGroup();
-                
-                // for($i=0; $i < count($maybe_add[$i]) ; $i++){
-                // $same_flag = 0;
-                //     for($j=0 ; $j < count($maybe_add[$j] ; $j++)){
-                        
-                //     }
-                // }
-              
+        }
+        foreach($maybe_edit_group as $maybe){
+            $maybe_add[] = $maybe->getProblemsGroup();
 
-            }
-
-          
-       
-       
-        //
-        dump($maybe_edit_group);
-        dump($not_allow);
-
-        dump($maybe_add);
-        dump($maybe_add[0]);
-        
-        
-        
- 
-
-      
-
-
-
-
-
+        }
+        //problemsgroup form table
         $builder->add('problemsgroup', ChoiceType::class, [
             'multiple' => true,
             'required' => false,
             'label' => 'Problems Group',
             'choices' => $allow_add,
         ]);
-
+        /*-------CCU-------*/
 
         
         $builder->add('save', SubmitType::class);
 
-        // Remove clearProblemtext field when we do not have a problem text
+        //Remove clearProblemtext field when we do not have a problem text
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             /** @var Problem|null $problem */
             $problem = $event->getData();
@@ -269,19 +238,15 @@ class ProblemType extends AbstractExternalIdEntityType
                 $form->remove('clearProblemtext');
             }
         });
-        $formProblemModifier = function (FormInterface $form, $contests = []) {
-            /** @var Contest[] $contests */
-        };
+        /*
         $builder->get('subtask')->addEventListener(FormEvents::POST_SUBMIT,
         function (FormEvent $event) use ($formProblemModifier) {
             $contests = $event->getForm()->getData();
-            dump($contests);
             $form  = $event->getForm()->getParent();
             $newsubtask = $form->get('subtask')->getData();
-            dump($form);
         });
+*/
 
-        
     }
 
     public function configureOptions(OptionsResolver $resolver)

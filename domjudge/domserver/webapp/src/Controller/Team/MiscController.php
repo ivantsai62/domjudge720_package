@@ -238,7 +238,7 @@ class MiscController extends BaseController
     }
     //新增
     /**
-     * @Route("team_index_test", name="team_index_test")
+     * @Route("/homepage", name="team_homepage")
 
      */
 
@@ -275,7 +275,7 @@ class MiscController extends BaseController
 
        
 
-        return $this->render('team/index_test.html.twig', [
+        return $this->render('team/homepage.html.twig', [
             'problems' => $problems,
             'showLimits' => $showLimits,
             'defaultMemoryLimit' => $defaultMemoryLimit,

@@ -633,13 +633,14 @@ class ProblemController extends BaseController
                     $testcase->setDescription($newDescription);
                     $messages[] = sprintf('Updated description of testcase %d ', $rank);
                 }
-                //新增task 分類
+                //add task classification
+                /*-------CCU-------*/
                 $newTask = (int)$request->request->get('task')[$rank];
                 if ($newTask !== (int)$testcase->getTask()) {
                     $testcase->setTask($newTask);
                     $messages[] = sprintf('Updated Task of testcase%d to %s', $rank,$newTask);
                 }
-                
+                /*-------CCU-------*/
                 foreach (['input', 'output', 'image'] as $type) {
                     /** @var UploadedFile $file */
                     if ($file = $request->files->get('update_' . $type)[$rank]) {
@@ -719,7 +720,10 @@ class ProblemController extends BaseController
                     return $this->redirectToRoute('jury_problem_testcases', ['probId' => $probId]);
                 }
             }
+            //7.2.0的bug 修改成7.3.0此處的程式碼
+            /*-------CCU-------*/
             $haswarnings = false;
+            
             if ($allOk) {
                 $newTestcase        = new Testcase();
                 $newTestcaseContent = new TestcaseContent();
@@ -801,7 +805,7 @@ class ProblemController extends BaseController
             }
 
             $this->em->flush();
-
+            /*-------CCU-------*/
             if (!empty($messages)) {
                 $message = '<ul>' . implode('', array_map(function (string $message) {
                         return sprintf('<li>%s</li>', $message);
@@ -966,24 +970,26 @@ class ProblemController extends BaseController
         /** @var Problem $problem */
         $problem = $this->em->getRepository(Problem::class)->find($probId);
         //判斷題組是否會有衝突
+        /*-------CCU-------*/
         $problemgroup_judge = $this->em->getRepository(Problem::class)->findAll();
         $group_restriction = [];
         
         foreach($problemgroup_judge as $row){
             $group_restriction[] = $row->getProblemsGroup();
         }
-        //
-       
+        /*-------CCU-------*/
         if (!$problem) {
             throw new NotFoundHttpException(sprintf('Problem with ID %s not found', $probId));
         }
-        $formData['problem'] = "111";
-        $form = $this->createForm(ProblemType::class, $problem)->setData($formData);
+        
+        $form = $this->createForm(ProblemType::class, $problem);
 
         $form->handleRequest($request);
-
+        //add (!$request->isXmlHttpRequest()) to check if data is submitted by ajax (don't save table)
+        /*-------CCU-------*/
         if ($form->isSubmitted() && $form->isValid()&& !$request->isXmlHttpRequest() ) {
-            //$this->em->flush();
+        /*-------CCU-------*/
+
             $this->saveEntity($this->em, $this->eventLogService, $this->dj, $problem,
                               $problem->getProbid(), false);
             return $this->redirectToRoute('jury_problem', ['probId' => $problem->getProbid()]);
@@ -1041,20 +1047,23 @@ class ProblemController extends BaseController
 
             return $this->redirectToRoute('jury_problem', ['probId' => $problem->getProbid()]);
         }
-        $test1 = $problem->getTaskPoint();
-        if ($test1 != null)
+        //get Taskpoint  
+        /*-------CCU-------*/
+        $all_task_point = $problem->getTaskPoint();
+        if ($all_task_point != null)
         {
-        $test = explode(",",$test1);
+            $task_point = explode(",",$all_task_point);
         }
         else
         {
-            $test="";
+            $task_point="";
         }
+        /*if submit by ajax then change data*/
         if($request->isXmlHttpRequest())
         {
             return $this->render('jury/problem_edit.html.twig', [
                 'problem' => $problem,
-                'test' => $test,
+                'task_point' => $task_point,
                 'problemgroup_judge' => $problemgroup_judge,
                 'group_restriction' => $group_restriction,
                 'form' => $form->createView(),
@@ -1064,12 +1073,13 @@ class ProblemController extends BaseController
 
         return $this->render('jury/problem_edit.html.twig', [
             'problem' => $problem,
-            'test' => $test,
+            'task_point' => $task_point,
             'problemgroup_judge' => $problemgroup_judge,
             'group_restriction' => $group_restriction,
             'form' => $form->createView(),
             'uploadForm' => $uploadForm->createView(),
         ]);
+        /*-------CCU-------*/
     }
 
     /**

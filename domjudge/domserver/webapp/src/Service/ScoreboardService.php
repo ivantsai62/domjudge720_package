@@ -360,12 +360,13 @@ class ScoreboardService
         $submissionsPubl = $pendingPubl = $timePubl = 0;
         $correctJury     = false;
         $correctPubl     = false;
-
-        //ccu find subtask 
+        /*-----CCU-----*/
+        //GET subtask if it's exist 
         $subtask = $problem->getSubtask();
         if(!empty($subtask)  )
         {
-            // ccu get all point source
+            // if subtask is not null/zero , get all task point source
+            // set all task point(json)->task_point_result(array) and max_task_point = 0
             $task_point_json = $problem->getTaskPoint();
             $task_point = explode(",",$task_point_json);
             $all_task_point = 0;
@@ -377,6 +378,8 @@ class ScoreboardService
             }
             $task_point_result[0] = $all_task_point;
         }
+        /*-----CCU-----*/
+        //for all submission
         foreach ($submissions as $submission) {
             /** @var Judging|ExternalJudgement|null $judging */
             if ($useExternalJudgements) {
@@ -429,10 +432,11 @@ class ScoreboardService
 
             $absSubmitTime = (float)$submission->getSubmittime();
             $submitTime    = $contest->getContestTime($absSubmitTime);
-            //ccu calculate the max task point
+            /*-----CCU-----*/
+            //calculate the max point
             if(!empty($subtask) )
             {
-
+            //if judging is wrong answer then calculat MAX point
             if($judging->getResult() == Judging::RESULT_WRONG_ANSWER )
             {   
                 $task_result = $judging->getTaskResult();
@@ -444,7 +448,7 @@ class ScoreboardService
 
                     $new_task_point = $new_task_point + ((int)$task_point[$i] * (int)$task_result[$i]);
                     $this->logger->debug(
-                        "hahahahahaha new_point = '%d' task_result['%d'] ='%d'",
+                        "new_point = '%d' task_result['%d'] ='%d'",
                         [ $new_task_point, $i ,(int)$task_result[$i],]
                     );
                 }
@@ -459,17 +463,12 @@ class ScoreboardService
                     "max_point = '%d',$task_point_result[0] = '%d',$task_point_result[1] = '%d'",
                     [ $max_task_point,$task_point_result[0],$task_point_result[1]]
                 );
-               // dump($all_task_point);
+               
             }
 
             }
-            // if(isset($all_task_point[1]) && $all_task_point[1] == 17)
-            // {
-            //     $this->logger->debug(
-            //         "hahahahahahaefwefewfwefwefewffqwff all_task_point[0] ='%d'  all_task_point[1] ='%d'",
-            //         [ $all_task_point[0] ,$all_task_point[1],]
-            //     );
-            // }
+            /*-----CCU-----*/
+
             // if correct, don't look at any more submissions after this one.
             if ($judging->getResult() == Judging::RESULT_CORRECT) {
                 $correctJury = true;
@@ -556,6 +555,8 @@ class ScoreboardService
             ':isCorrectPublic' => (int)$correctPubl,
             ':isFirstToSolve' => (int)$firstToSolve,
         ];
+        /*-----CCU-----*/
+        //save the alltaskpoint data if subtask is not empty
         if (!empty($subtask))
         {
         $params [':alltaskpoint'] = json_encode($task_point_result);
@@ -576,7 +577,8 @@ class ScoreboardService
                 VALUES (:cid, :teamid, :probid, :submissionsRestricted, :pendingRestricted, :solvetimeRestricted, :isCorrectRestricted,
                 :submissionsPublic, :pendingPublic, :solvetimePublic, :isCorrectPublic, :isFirstToSolve)', $params);
         }
-
+        /*-----CCU-----*/
+        
         if ($this->em->getConnection()->fetchColumn('SELECT RELEASE_LOCK(:lock)',
                                                     [':lock' => $lockString]) != 1) {
             throw new \Exception('ScoreboardService::calculateScoreRow failed to release lock');

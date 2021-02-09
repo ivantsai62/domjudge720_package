@@ -730,6 +730,8 @@ class JudgehostController extends AbstractFOSRestController
         if ($request->request->has('batch')) {
             $this->addMultipleJudgingRuns($request, $hostname, $judgingId);
         } else {
+            /*-----CCU-----*/
+            //add task number
             $required = [
                 'testcaseid',
                 'runresult',
@@ -750,6 +752,7 @@ class JudgehostController extends AbstractFOSRestController
 
             $testCaseId   = $request->request->get('testcaseid');
             $runResult    = $request->request->get('runresult');
+            //get task number
             $task         = $request->request->get('task');
             $runTime      = $request->request->get('runtime');
             $outputRun    = $request->request->get('output_run');
@@ -766,6 +769,7 @@ class JudgehostController extends AbstractFOSRestController
 
             /** @var Judging $judging */
             $judging = $this->em->getRepository(Judging::class)->find($judgingId);
+            //input task number
             $this->addSingleJudgingRun($hostname, $judgingId, (int)$testCaseId, $runResult,(int)$task, $runTime, $judging,
                                        $outputSystem, $outputError, $outputDiff, $outputRun, $metadata);
             $judgehost = $this->em->getRepository(Judgehost::class)->find($hostname);
@@ -1029,7 +1033,8 @@ class JudgehostController extends AbstractFOSRestController
                                 [ $testCaseId, $runResult, $resultsRemap[$runResult] ]);
             $runResult = $resultsRemap[$runResult];
         }
-
+        /*-----CCU-----*/
+        //set task number
         $this->em->transactional(function () use (
             $runTime,
             $runResult,
@@ -1067,7 +1072,7 @@ class JudgehostController extends AbstractFOSRestController
                                             EventLogService::ACTION_CREATE, $judging->getCid());
             }
         });
-
+        /*-----CCU-----*/
         // Reload the testcase and judging, as EventLogService::log will clear the entity manager.
         // For the judging, also load in the submission and some of it's relations
         $testCase = $this->em->getRepository(Testcase::class)->find($testCaseId);
@@ -1121,6 +1126,7 @@ class JudgehostController extends AbstractFOSRestController
 
             $submission = $judging->getSubmission();
             $subtask    = $submission->getProblem()->getSubtask();
+            //get subtask if exist then calucate the judging task_result array
             if(!empty($subtask))
             {
                 $task_result = array();
@@ -1160,6 +1166,7 @@ class JudgehostController extends AbstractFOSRestController
             $problem    = $submission->getProblem();
             $this->scoreboardService->calculateScoreRow($contest, $team, $problem,true,true);
             }
+            /*-----CCU-----*/
 
             if (count($runs) == $numTestCases || $lazyEval) {
                 // NOTE: setting endtime here determines in testcases_GET

@@ -7,7 +7,8 @@
 {% endblock %}
 
 {% block content %}
-<h1>DOMjudge Jury interface 123</h1>
+<h1>DOMjudge Jury interface</h1>
+
 
 {% for error in errors %}
     {% include 'partials/alert.html.twig' with {type: 'danger', message: error} %}

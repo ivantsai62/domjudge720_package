@@ -55,11 +55,14 @@
                         <input type="checkbox" name="sample[{{ testcase.rank }}]" value="sample"
                                {% if testcase.sample %}checked{% endif %} />
                     </td>
+                    {# UI for task number #}
+                    {#-------CCU-------#}
                     {% if problem.subtask != null and problem.subtask != 0 %}
                     <td rowspan="2" class="testsubtask">
                         <input type="number" class="inputsubtask" min=1 max ="{{problem.subtask}}" id="task[{{ testcase.rank }}]" name="task[{{ testcase.rank }}]" value="{{testcase.task}}"/>
                     </td>
                     {% endif %}
+                    {#-------CCU-------#}
                     <td class="filename">
                         <a href="{{ path('jury_problem_testcase_fetch', {'probId': problem.probid, 'rank': testcase.rank, 'type': 'input'}) }}">
                             p{{ problem.probid }}.t{{ testcase.rank }}.in
@@ -161,6 +164,8 @@
                 </div>
             </div>
         </div>
+        {# UI for task number #}
+        {#-------CCU-------#}
         <div class="form-row">
             <div class="form-group col-sm-4">
                 {% if problem.subtask != null and problem.subtask != 0 %}
@@ -170,6 +175,7 @@
                 {% endif %}
             </div>
         </div>
+        {#-------CCU-------#}
         <div class="form-row">
             <div class="form-group col-sm-4">
                 <label for="add_desc">Description</label>
